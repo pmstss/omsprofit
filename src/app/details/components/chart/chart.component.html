@@ -1,0 +1,8 @@
+<div class="chart-container">
+    <lib-ngx-chartist #inner *ngIf="chartOpts.data.labels" [data]="chartOpts.data" [options]="chartOpts.options"
+                      [responsiveOptions]="chartOpts.responsiveOptions"
+                      [events]="chartOpts.events"
+                      [type]="chartOpts.type ? chartOpts.type: 'Line'"
+                      [lineSmooth]="chartOpts.lineSmooth">
+    </lib-ngx-chartist>
+</div>

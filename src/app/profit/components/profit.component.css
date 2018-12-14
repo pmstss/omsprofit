@@ -1,0 +1,30 @@
+h2 {
+    font-size: 3rem;
+}
+
+.profit-value {
+    margin-top: -20vh !important;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.asset-details-container {
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+}
+
+.bg-custom {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.asset-profit {
+    font-family: monospace;
+}
+
+.asset-profit > span {
+    margin: 0 10px;
+    white-space: nowrap;
+}

@@ -1,0 +1,45 @@
+<div class="profit d-flex flex-column h-100 justify-content-center align-items-center text-center">
+    <div *ngIf="!loading">
+        <div class="profit-value bg-custom my-4 d-inline-block"
+              [ngClass]="{'text-danger': !profitMeta.positive, 'text-success': profitMeta.positive}">
+            <div class="text-primary">Instant Profit</div>
+            <h2 class="my-1">
+                {{profitMeta.profit | currency : 'USD': 'symbol': '1.2-2'}}
+            </h2>
+            <span class="border rounded px-2"
+                  [ngClass]="{'border-danger': !profitMeta.positive, 'border-success': profitMeta.positive}">
+                    <fa-icon [icon]="profitMeta.positive ? faCaretUp : faCaretDown"></fa-icon>
+                {{profitMeta.profitPercent | percent: '1.2-2' | sign}}
+            </span>
+
+            <div class="text-info mt-4">
+                Assets value: {{profitMeta.value | currency : 'USD': 'symbol': '1.2-2'}}
+            </div>
+        </div>
+
+        <div class="asset-details-container bg-custom mt-4 text-primary"
+                (click)="collapse.toggle()" aria-controls="assetDetails">
+
+            <span class="py-1">
+                <fa-icon [icon]="collapse.collapse ? faCaretDown : faCaretRight"></fa-icon>
+                Asset details
+            </span>
+
+            <div id="assetDetails" #collapse="bs-collapse" [collapse]="false" class="mt-2">
+                <div *ngFor="let assetProfit of profitMeta.assetsProfit" class="asset-profit d-flex py-1"
+                        [ngClass]="assetProfit.profit < 0 ? 'text-danger' : 'text-success'">
+                    <span class="mr-auto">{{assetProfit.asset}}</span>
+                    <span>
+                        {{assetProfit.investValue | currency : 'USD': 'symbol': '1.2-2'}}
+                        →
+                        {{assetProfit.value | currency : 'USD': 'symbol': '1.2-2'}}
+                        ({{assetProfit.profit | currency : 'USD': 'symbol': '1.2-2'}},
+                        {{assetProfit.profitPercent | percent : '1.2-2' | sign}})
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-loader *ngIf="loading" [message]="'Calculating profit...'"></app-loader>
+</div>

@@ -1,0 +1,45 @@
+.investment {
+    border: 1px dotted #1b2548;
+    opacity: 1;
+}
+
+.investment .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.remove-link {
+    top: -0.5rem;
+    position: relative;
+    right: 0.6rem;
+    z-index: 1;
+}
+
+.fetch-link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+    .remove-link {
+        height: 0;
+    }
+}
+
+/** ng validation **/
+
+.ng-invalid:not(form) {
+    border: 2px solid red;
+    color: red;
+}
+
+.ng-dirty:not(form) {
+    background-color: #ffa;
+}
+
+.custom-error {
+    background-color: rgba(220, 53, 69, 0.9);
+    color: #fff;
+    margin: 0 2px;
+}

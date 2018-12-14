@@ -1,0 +1,70 @@
+:host {
+    flex: 1;
+    overflow: hidden;
+}
+
+.chart-container {
+    height: 100%;
+    background-color: white;
+}
+
+/*** Chartist.js ***/
+
+.ct-grid {
+    stroke: rgba(255, 255, 255, .3);
+}
+
+.ct-line {
+    stroke-width: 0.5px !important;
+    color: lawngreen;
+}
+
+.ct-point {
+    stroke-width: 0 !important;
+}
+
+.ct-chart .ct-label.ct-horizontal {
+    text-align: center;
+}
+
+.ct-series-all .ct-bar,
+.ct-series-all .ct-line,
+.ct-series-all .ct-point,
+.ct-series-all .ct-slice-donut {
+    stroke: red !important;
+    stroke-width: 2px !important;
+}
+
+.ct-series-ag .ct-bar,
+.ct-series-ag .ct-line,
+.ct-series-ag .ct-point,
+.ct-series-ag .ct-slice-donut {
+    stroke: silver !important;
+    stroke-width: 1.5px !important;
+}
+
+.ct-series-au .ct-bar,
+.ct-series-au .ct-line,
+.ct-series-au .ct-point,
+.ct-series-au .ct-slice-donut {
+    stroke: gold !important;
+    stroke-width: 1.5px !important;
+}
+
+.ct-series-pt .ct-bar,
+.ct-series-pt .ct-line,
+.ct-series-pt .ct-point,
+.ct-series-pt .ct-slice-donut {
+    stroke: darkgray !important;
+    stroke-width: 1.5px !important;
+}
+
+.ct-series-pd .ct-bar,
+.ct-series-pd .ct-line,
+.ct-series-pd .ct-point,
+.ct-series-pd .ct-slice-donut {
+    stroke: lightblue !important;
+    stroke-width: 1.5px !important;
+}
+
+

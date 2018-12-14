@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <div class="d-flex p-3 mt-3 align-items-center actions-bar">
+                <a [routerLink]="" class="text-success flex-text-overflow" (click)="addInvestment()">Add Investment</a>
+
+                <input type="button" value="Reset" class="btn btn-sm btn-secondary ml-auto" (click)="reset()"
+                       [disabled]="!resetAllowed && isValid()"/>
+                <button type="submit" class="btn btn-sm btn-primary ml-3" (click)="save()"
+                        [disabled]="!saveAllowed">Save</button>
+            </div>
+
+            <investment *ngFor="let inv of investments; let idx = index"
+                [investment]="inv" [total]="investments.length" [idx]="idx" (removed)="removeInvestment(idx)"></investment>
+
+            <a #scrollToEl [routerLink]="" class="mx-3 mb-4 text-warning d-flex justify-content-center"
+                    (click)="restoreDefaults()">
+                Restore default investment data
+            </a>
+        </div>
+    </div>
+</div>

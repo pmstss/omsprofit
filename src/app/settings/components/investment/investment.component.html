@@ -1,0 +1,60 @@
+<form class="my-3 p-3 bg-custom rounded text-light investment" [@fadeAnimation]="'in'" #form="ngForm">
+    <div *ngIf="total > 1" class="remove-link d-flex justify-content-end">
+        <a [routerLink]="" class="text-danger small" (click)="removeInvestment()">Remove</a>
+    </div>
+
+    <div class="form-group row">
+        <label for="asset{{idx}}" class="col-12 col-sm-3">Asset</label>
+        <div class="col-12 col-sm-9 p-0">
+            <select id="asset{{idx}}" name="asset" class="form-control form-control-sm"
+                    [(ngModel)]="inv.asset" required="required" #asset="ngModel">
+                <option value="au">Gold</option>
+                <option value="pt">Platinum</option>
+                <option value="ag">Silver</option>
+                <option value="pd">Palladium</option>
+            </select>
+            <div *ngIf="asset.errors && asset.touched" class="custom-error text-center small">Required</div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="amount{{idx}}" class="col-12 col-sm-3">Amount</label>
+        <div class="col-12 col-sm-9 p-0">
+            <input id="amount{{idx}}" name="amount" type="number" class="form-control form-control-sm"
+                   required="required" min="1" [max]="getAssetMaxAmount(inv.asset)"
+                   [(ngModel)]="inv.amount" numberValidator
+                   [validMax]="getAssetMaxAmount(inv.asset)" [validMin]="1" #amount="ngModel"/>
+            <div *ngIf="amount.touched && amount.errors && amount.errors.custom" class="custom-error text-center small">
+                {{amount.errors.custom.message}}
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="date{{idx}}" class="col-12 col-sm-3">Date</label>
+        <div class="col-12 col-sm-9 p-0">
+            <input id="date{{idx}}" name="date" type="date" class="form-control form-control-sm"
+                   [min]="minDateString" [max]="maxDateString" required="required"
+                   [(ngModel)]="dateModel" dateValidator #date="ngModel" (change)="onDateChange($event)"/>
+            <div *ngIf="date.touched && date.errors && date.errors.custom" class="custom-error text-center small">
+                {{date.errors.custom.message}}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="quote{{idx}}" class="col-12 col-sm-3">Quote</label>
+        <div class="col-8 col-sm-6 p-0">
+            <input id="quote{{idx}}" name="quote" type="number" class="form-control form-control-sm"
+                   min="0.1" max="100" step=".01" required="required"
+                   [(ngModel)]="inv.quote" numberValidator [validMax]="100" [validMin]="0.1" #quote="ngModel" />
+            <div *ngIf="quote.touched && quote.errors && quote.errors.custom" class="custom-error text-center small">
+                {{quote.errors.custom.message}}
+            </div>
+        </div>
+        <div class="col-4 col-sm-3 d-flex align-items-center small" *ngIf="asset.valid && date.valid">
+            <a [routerLink]="" href="#" (click)="fetchQuote(inv)" class="fetch-link">Fetch Quote</a>
+        </div>
+    </div>
+
+    <app-loader *ngIf="loadingQuote"></app-loader>
+</form>

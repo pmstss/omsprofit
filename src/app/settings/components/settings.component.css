@@ -1,0 +1,17 @@
+label {
+    padding-left: 0;
+}
+
+.flex-text-overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.actions-bar {
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+    background-color: #1b3a48;
+    border-bottom: 1rem solid rgb(65, 87, 98);
+}

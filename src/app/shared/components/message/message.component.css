@@ -1,0 +1,23 @@
+:host {
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    z-index: 100;
+}
+
+.alert {
+    max-width: 500px;
+    min-width: 300px;
+    width: 100%;
+    word-break: break-all;
+}
+
+.alert .message {
+    flex: 1;
+}
+
+.alert .close {
+    cursor: pointer;
+}

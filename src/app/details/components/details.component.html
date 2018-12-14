@@ -1,0 +1,33 @@
+<div class="d-flex flex-column h-100">
+    <div class="container d-flex text-light align-items-center justify-content-around my-2">
+        <label>
+            <span class="d-none d-md-inline-block">Date range:</span>
+            <select [(ngModel)]="datePeriodString" (change)="onDateRangeChange()">
+                <option value="week">Last week</option>
+                <option value="month" selected>Last month</option>
+                <option value="all">Whole investment range</option>
+            </select>
+        </label>
+
+        <div>
+            <label *ngFor="let assetFilter of assetFilters" class="ml-2">
+                <span class="d-none d-md-inline-block">{{assetFilter.name}}</span>
+                <span class="d-inline-block d-md-none">{{assetFilter.asset}}</span>
+                <input type="checkbox" [(ngModel)]="assetFilter.enabled" [value]="true"
+                        (change)="onAssetFiltersChange()"/>
+            </label>
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link" routerLinkActive="active" routerLink="chart" role="tab" >Chart</a>
+            <a class="nav-item nav-link" routerLinkActive="active" routerLink="table" role="tab">Table</a>
+        </div>
+    </nav>
+
+    <router-outlet></router-outlet>
+</div>
+
+
+
