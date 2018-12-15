@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { IChartistSeriesData, IChartistSettingsType } from 'ngx-chartist';
-import * as moment from 'moment';
-import { Asset, AssetQuote, AssetFilter, Investment, AppState, AppStateStore,
+import { AssetQuote, Investment, AppState, AppStateStore,
     DatePeriod, ProfitService, RepoService } from '../../../core';
 import { DateUtilsToken, DateUtils, AutoUnsubscribe } from '../../../common-aux';
 
@@ -29,7 +29,7 @@ export class ChartComponent implements OnInit {
                 labelInterpolationFnc: (label, idx, labels) => {
                     const step = Math.max(Math.round(labels.length / 10), 1);
                     if (idx % step === 0) {
-                        return moment(label).format('DD MMM');
+                        return formatDate(label, 'd MMM', 'en');
                     }
                 }
             },
@@ -57,9 +57,7 @@ export class ChartComponent implements OnInit {
             const { dateTo, dateFrom } = ChartComponent.getFromToDatesByPeriod(state.datePeriod, state.investments);
             const dates: Date[] = this.dateUtils.rangeAsArray(dateFrom, dateTo);
 
-            const invMinDate = moment(Math.min(...state.investments.map(inv => inv.date.getTime())));
-
-            this.repoService.getQuotesForRange(dateFrom.toDate(), dateTo.toDate()).subscribe((quotes) => {
+            this.repoService.getQuotesForRange(dateFrom, dateTo).subscribe((quotes) => {
                 this.chartOpts.data.series = [
                     this.generateSerie(null, dates, state, quotes),
                     ...state.investments
@@ -76,19 +74,17 @@ export class ChartComponent implements OnInit {
     }
 
     private static getFromToDatesByPeriod(dateRange: DatePeriod, investments: Investment[]):
-            {dateFrom: moment.Moment, dateTo: moment.Moment} {
-        const dateTo = moment();
-
-        let dateFrom = moment();
+            {dateFrom: Date, dateTo: Date} {
+        let dateFrom = new Date();
         if (dateRange === DatePeriod.LAST_WEEK) {
-            dateFrom.add(-7, 'days');
+            dateFrom.setDate(dateFrom.getDate() - 7);
         } else if (dateRange === DatePeriod.LAST_MONTH) {
-            dateFrom.add(-1, 'month');
+            dateFrom.setMonth(dateFrom.getMonth() - 1);
         } else if (dateRange === DatePeriod.ALL_TIME) {
-            dateFrom = moment(Math.min(...investments.map(inv => inv.date.getTime())));
+            dateFrom = new Date(Math.min(...investments.map(inv => inv.date.getTime())));
         }
 
-        return { dateFrom, dateTo };
+        return { dateFrom, dateTo: new Date() };
     }
 
     private generateSerie(inv: Investment, dates: Date[], state: AppState, quotes: AssetQuote[]): IChartistSeriesData {

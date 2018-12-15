@@ -1,6 +1,6 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MomentDateUtils } from './utils/date-utils';
+import { DateUtilsImpl } from './utils/date-utils';
 import { ArrayUtilsImpl } from './utils/array-utils';
 import { SignPipe } from './pipes/sing.pipe';
 import { DialogService } from './services/dialog.service';
@@ -17,7 +17,7 @@ export const ArrayUtilsToken = new InjectionToken('ArrayUtils');
     declarations: [SignPipe, ConfirmComponent],
     entryComponents: [ConfirmComponent],
     providers: [
-        { provide: DateUtilsToken, useClass: MomentDateUtils },
+        { provide: DateUtilsToken, useClass: DateUtilsImpl },
         { provide: ArrayUtilsToken, useClass: ArrayUtilsImpl },
         DialogService
     ],

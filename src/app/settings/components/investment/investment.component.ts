@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, KeyValueDiffer, KeyValueDiffers,
     OnInit, Output, ViewChild } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgForm } from '@angular/forms';
-import * as moment from 'moment';
 import { Asset, AssetQuote, Investment, RepoService, QUOTES_MIN_DATE } from '../../../core';
 import { DateUtilsToken, DateUtils, DialogService } from '../../../common-aux';
 
@@ -32,7 +32,7 @@ export class InvestmentComponent implements OnInit {
     @ViewChild('form') public form: NgForm;
     @Output() removed = new EventEmitter<void>();
 
-    private static DATE_INPUT_FORMAT = 'YYYY-MM-DD';
+    private static DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
     minDateString: string;
     maxDateString: string;
@@ -50,7 +50,7 @@ export class InvestmentComponent implements OnInit {
     }
 
     private static formatDateForInput(d: Date): string {
-        return moment(d).format(InvestmentComponent.DATE_INPUT_FORMAT);
+        return formatDate(d, InvestmentComponent.DATE_INPUT_FORMAT, 'en');
     }
 
     ngOnInit() {

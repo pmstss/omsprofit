@@ -1,39 +1,27 @@
-import * as moment from 'moment';
-
-type DateType =  moment.Moment | Date | string;
+import { formatDate } from '@angular/common';
 
 export interface DateUtils {
-    isSameDate(d1: DateType, d2: DateType): boolean;
-    isBetween(date: DateType, dateFrom: DateType, dateTo: DateType): boolean;
-    isEarlier(dateFrom: DateType, dateTo: DateType): boolean;
-    rangeAsArray(dateFrom: DateType, dateTo: DateType): Date[];
-    format(date: DateType, format: string): string;
+    isSameDate(d1: Date, d2: Date): boolean;
+    isEarlier(dateFrom: Date, dateTo: Date): boolean;
+    rangeAsArray(dateFrom: Date, dateTo: Date): Date[];
 }
 
-export class MomentDateUtils implements DateUtils {
-    isSameDate(d1: DateType, d2: DateType): boolean {
-        return moment(d1).diff(d2, 'days') === 0;
+export class DateUtilsImpl implements DateUtils {
+    isSameDate(d1: Date, d2: Date): boolean {
+        return formatDate(d1, 'yyyy-MM-dd', 'en') === formatDate(d2, 'yyyy-MM-dd', 'en');
     }
 
-    isBetween(date: DateType, dateFrom: DateType, dateTo: DateType): boolean {
-        return moment(date).isBetween(moment(dateFrom), moment(dateTo));
+    isEarlier(dateFrom: Date, dateTo: Date): boolean {
+        return dateFrom.getTime() < dateTo.getTime();
     }
 
-    isEarlier(dateFrom: DateType, dateTo: DateType): boolean {
-        return moment(dateFrom).diff(dateTo) < 0;
-    }
-
-    rangeAsArray(dateFrom: DateType, dateTo: DateType): Date[] {
-        const m = moment(dateFrom);
+    rangeAsArray(dateFrom: Date, dateTo: Date): Date[] {
+        const d = new Date(dateFrom);
         const dates: Date[] = [];
-        while (m.diff(dateTo, 'hours') <= 0) {
-            dates.push(m.toDate());
-            m.add(1, 'day');
+        while (d.getTime() < dateTo.getTime()) {
+            dates.push(new Date(d));
+            d.setDate(d.getDate() + 1);
         }
         return dates;
-    }
-
-    format(date: DateType, format: string): string {
-        return moment(date).format(format);
     }
 }

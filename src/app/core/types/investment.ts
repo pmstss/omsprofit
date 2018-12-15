@@ -1,5 +1,6 @@
+import { formatDate } from '@angular/common';
 import { Asset } from './asset';
-import { MomentDateUtils } from '../../common-aux';
+import { DateUtilsImpl } from '../../common-aux';
 
 export interface InvestmentData {
     date: string;
@@ -14,7 +15,7 @@ export class Investment {
     amount: number;
     quote: number;
 
-    private dateUtils = new MomentDateUtils();
+    private dateUtils = new DateUtilsImpl();
 
     constructor(data?: InvestmentData) {
         this.date = data ? new Date(data.date) : new Date();
@@ -29,7 +30,7 @@ export class Investment {
 
     serialize(): InvestmentData {
         return {
-            date: this.dateUtils.format(this.date, 'YYYY-MM-DD'),
+            date: formatDate(this.date, 'yyyy-MM-dd', 'en'),
             asset: this.asset,
             amount: this.amount,
             quote: this.quote
@@ -38,11 +39,6 @@ export class Investment {
 
     clone(): Investment {
         return new Investment(this.serialize());
-    }
-
-    equals(data: InvestmentData): boolean {
-        return data && this.asset === data.asset && this.amount === data.amount && this.quote === data.quote &&
-                this.dateUtils.isSameDate(this.date, data.date);
     }
 
     get value(): number {

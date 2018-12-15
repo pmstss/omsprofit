@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { concatMap, distinctUntilChanged, map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { DateUtilsToken, ArrayUtilsToken, DateUtils, ArrayUtils } from '../../common-aux';
 import { Asset } from '../types/asset';
 import { AssetQuote } from '../types/asset-quote';
@@ -22,14 +21,14 @@ export class ProfitService {
                 @Inject(ArrayUtilsToken) private arrayUtils: ArrayUtils) {
     }
 
-    private findAssetQuoteForDate(quotes: AssetQuote[], asset: Asset, date: Date | moment.Moment): AssetQuote {
+    private findAssetQuoteForDate(quotes: AssetQuote[], asset: Asset, date: Date): AssetQuote {
         return quotes.find(item => this.dateUtils.isSameDate(item.date, date) && item.asset === asset);
     }
 
     private findNearestQuote(date: Date, inv: Investment, quotes: AssetQuote[]): AssetQuote {
         let currentQuote;
-        for (let i = 0, m = moment(date); i < 10 && !currentQuote; ++i, m.add(-1, 'd')) {
-            currentQuote = this.findAssetQuoteForDate(quotes, inv.asset, m.toDate());
+        for (let i = 0, d = new Date(date); i < 10 && !currentQuote; ++i, d.setDate(d.getDate() - 1)) {
+            currentQuote = this.findAssetQuoteForDate(quotes, inv.asset, d);
         }
         return currentQuote;
     }

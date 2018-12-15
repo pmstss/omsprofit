@@ -38,18 +38,6 @@ export class SettingsComponent implements OnInit, DoCheck {
         });
     }
 
-    private investmentsEqual(investments): boolean {
-        if (!this.investments && !investments) {
-            return true;
-        }
-
-        if (!this.investments || !investments || this.investments.length !== investments.length) {
-            return false;
-        }
-
-        return this.investments.every((inv, idx) => inv.equals(investments[idx]));
-    }
-
     removeInvestment(idx: number) {
         this.investments.splice(idx, 1);
         this.appStateStore.updateInvestments(this.investments);
