@@ -8,7 +8,7 @@ Uses [omsfeed project](https://github.com/pmstss/omsfeed) as server side.
 
 ### [Live Demo](https://omsprofit.herokuapp.com/)
 
-<div align="center">
+<div>
 <img src="https://user-images.githubusercontent.com/12969334/50033345-34ad7780-0009-11e9-9259-3387b7884886.jpg" width="187" height="333" alt="Profit"/>    
 <img src="https://user-images.githubusercontent.com/12969334/50033344-34ad7780-0009-11e9-9717-764531acce6c.jpg" width="187" height="333" alt="Chart"/>
 <img src="https://user-images.githubusercontent.com/12969334/50033346-34ad7780-0009-11e9-8429-d71a01740372.jpg" width="187" height="333" alt="Settings"/>    
