@@ -41,7 +41,6 @@ Uses [omsfeed project](https://github.com/pmstss/omsfeed) as server side.
 * [Chartist.js](https://github.com/gionkunz/chartist-js), [ngx-chartist](https://github.com/affilnost/ngx-chartist)
 * [ngx-loading](https://github.com/Zak-C/ngx-loading)
 * [TSLint](https://github.com/palantir/tslint)
-* [Moment.js](https://github.com/moment/moment)
 
 ### Running locally
 
