@@ -11,7 +11,7 @@ import { DateUtilsToken, DateUtils, AutoUnsubscribe } from '../../../common-aux'
     selector: 'app-chart',
     templateUrl: './chart.component.html',
     styleUrls: ['./chart.component.css'],
-    encapsulation: ViewEncapsulation.Native
+    encapsulation: ViewEncapsulation.ShadowDom
 })
 export class ChartComponent implements OnInit {
     @ViewChild('inner') inner: any;
