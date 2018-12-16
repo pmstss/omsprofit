@@ -20,7 +20,7 @@ export const QUOTES_MIN_DATE = new InjectionToken('QUOTES_MIN_DATE');
         RepoService,
         MessageService,
         { provide: ErrorHandler, useClass: MessageErrorHandler },
-        { provide: REPO_URL,  useValue: 'https://omstracker.herokuapp.com/quotes' },
+        { provide: REPO_URL,  useValue: 'https://omsfeed.herokuapp.com/quotes' },
         { provide: QUOTES_MIN_DATE,  useValue: new Date('2018-06-01') }
     ]
 })
