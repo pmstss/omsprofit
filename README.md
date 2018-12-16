@@ -4,7 +4,7 @@
 Angular pet project for checking precious metals (au, ag, pt, pd) investments profit.
 Uses [omsfeed project](https://github.com/pmstss/omsfeed) as server side.
 
-**ALFA VERSION, bugs are highly possible...**
+**ALPHA VERSION, bugs are possible...**
 
 ### [Live Demo](https://omsprofit.herokuapp.com/)
 
