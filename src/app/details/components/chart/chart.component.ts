@@ -3,8 +3,7 @@ import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { IChartistSeriesData, IChartistSettingsType } from 'ngx-chartist';
-import { AssetQuote, Investment, AppState, AppStateStore,
-    DatePeriod, ProfitService, RepoService } from '../../../core';
+import { Investment, AppState, AppStateStore, DatePeriod, ProfitService } from '../../../core';
 import { DateUtilsToken, DateUtils, AutoUnsubscribe } from '../../../common-aux';
 
 @Component({
@@ -40,8 +39,7 @@ export class ChartComponent implements OnInit {
         }
     };
 
-    constructor(private appStateStore: AppStateStore, private repoService: RepoService,
-                private profitService: ProfitService,
+    constructor(private appStateStore: AppStateStore, private profitService: ProfitService,
                 @Inject(DateUtilsToken) private dateUtils: DateUtils) {
     }
 
@@ -57,13 +55,13 @@ export class ChartComponent implements OnInit {
             const { dateTo, dateFrom } = ChartComponent.getFromToDatesByPeriod(state.datePeriod, state.investments);
             const dates: Date[] = this.dateUtils.rangeAsArray(dateFrom, dateTo);
 
-            this.repoService.getQuotesForRange(dateFrom, dateTo).subscribe((quotes) => {
-                this.chartOpts.data.series = [
-                    this.generateSerie(null, dates, state, quotes),
-                    ...state.investments
-                        .filter(inv => state.assetFilters.find(x => x.asset === inv.asset).enabled)
-                        .map(inv => this.generateSerie(inv, dates, state, quotes))
-                ];
+            Promise.all([
+                this.generateSerie(null, dates, state),
+                ...state.investments
+                    .filter(inv => state.assetFilters.find(x => x.asset === inv.asset).enabled)
+                    .map(inv => this.generateSerie(inv, dates, state))
+            ]).then((series) => {
+                this.chartOpts.data.series = series;
                 this.chartOpts.data.labels = dates;
 
                 if (this.inner) {
@@ -87,11 +85,12 @@ export class ChartComponent implements OnInit {
         return { dateFrom, dateTo: new Date() };
     }
 
-    private generateSerie(inv: Investment, dates: Date[], state: AppState, quotes: AssetQuote[]): IChartistSeriesData {
-        return {
-            data: dates.map(
-                date => this.profitService.calculateProfitFor(date, !inv ? state.investments : [inv], quotes).profit),
-            className: `ct-series-${inv ? inv.asset : 'all'}`
-        };
+    private generateSerie(inv: Investment, dates: Date[], state: AppState): Promise<IChartistSeriesData> {
+        const investments = !inv ? state.investments : [inv];
+        return Promise.all(dates.map(date => this.profitService.calculateProfitFor(date, investments)))
+            .then(profitMetas => ({
+                data: profitMetas.map(x => x.profit),
+                className: `ct-series-${inv ? inv.asset : 'all'}`
+            }));
     }
 }

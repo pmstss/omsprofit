@@ -3,7 +3,7 @@ import { Component, EventEmitter, Inject, Input, KeyValueDiffer, KeyValueDiffers
 import { formatDate } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgForm } from '@angular/forms';
-import { Asset, AssetQuote, Investment, RepoService, QUOTES_MIN_DATE } from '../../../core';
+import { Asset, AssetQuote, Investment, QuotesService, QUOTES_MIN_DATE } from '../../../core';
 import { DateUtilsToken, DateUtils, DialogService } from '../../../common-aux';
 
 @Component({
@@ -41,7 +41,7 @@ export class InvestmentComponent implements OnInit {
 
     differ: KeyValueDiffer<string, any>;
 
-    constructor(private repoService: RepoService, private dialogService: DialogService,
+    constructor(private quotesService: QuotesService, private dialogService: DialogService,
                 @Inject(DateUtilsToken) private dateUtils: DateUtils,
                 @Inject(QUOTES_MIN_DATE) minDate: Date,
                 private keyValueDiffers: KeyValueDiffers) {
@@ -77,14 +77,10 @@ export class InvestmentComponent implements OnInit {
 
     fetchQuote(inv: Investment) {
         this.loadingQuote = true;
-        this.repoService.getQuotesForDate(inv.date).subscribe(
-            (quotes: AssetQuote[]) => {
-                inv.quote = quotes
-                    .find(q => q.asset === inv.asset && this.dateUtils.isSameDate(q.date, inv.date)).sellUsd;
-            },
-            null,
-            () => this.loadingQuote = false
-        );
+        this.quotesService.getQuote(inv.date, inv.asset).then((quote: AssetQuote) => {
+            inv.quote = quote.sellUsd;
+            this.loadingQuote = false;
+        }).catch(() => this.loadingQuote = false);
     }
 
     removeInvestment() {

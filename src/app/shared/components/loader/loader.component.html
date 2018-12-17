@@ -1,5 +1,5 @@
 <ng-template #customLoadingTemplate>
-    <span *ngIf="message" class="text-light bg-custom p-1">{{message}}</span>
+    <span *ngIf="message" class="text-light bg-custom p-1 loader-message">{{message}}</span>
 </ng-template>
 
 <ngx-loading [show]="true" [config]="loaderConfig" [template]="customLoadingTemplate"></ngx-loading>

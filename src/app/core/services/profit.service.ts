@@ -1,14 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { concatMap, distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, flatMap, map } from 'rxjs/operators';
 import { DateUtilsToken, ArrayUtilsToken, DateUtils, ArrayUtils } from '../../common-aux';
-import { Asset } from '../types/asset';
-import { AssetQuote } from '../types/asset-quote';
 import { AssetProfit } from '../types/asset-profit';
 import { ProfitMeta } from '../types/profit-meta';
 import { Investment } from '../types/investment';
-import { RepoService } from './repo.service';
 import { AppStateStore } from '../state/app-state-store';
+import { QuotesService } from './quotes.service';
 
 export class ProfitAppState {
     investments: Investment[];
@@ -16,40 +14,28 @@ export class ProfitAppState {
 
 @Injectable()
 export class ProfitService {
-    constructor(private repoService: RepoService, private appStateStore: AppStateStore,
+    constructor(private appStateStore: AppStateStore, private quotesService: QuotesService,
                 @Inject(DateUtilsToken) private dateUtils: DateUtils,
                 @Inject(ArrayUtilsToken) private arrayUtils: ArrayUtils) {
     }
 
-    private findAssetQuoteForDate(quotes: AssetQuote[], asset: Asset, date: Date): AssetQuote {
-        return quotes.find(item => this.dateUtils.isSameDate(item.date, date) && item.asset === asset);
-    }
-
-    private findNearestQuote(date: Date, inv: Investment, quotes: AssetQuote[]): AssetQuote {
-        let currentQuote;
-        for (let i = 0, d = new Date(date); i < 10 && !currentQuote; ++i, d.setDate(d.getDate() - 1)) {
-            currentQuote = this.findAssetQuoteForDate(quotes, inv.asset, d);
-        }
-        return currentQuote;
-    }
-
-    calculateProfitFor(date: Date, investments: Investment[], quotes: AssetQuote[]): ProfitMeta {
+    calculateProfitFor(date: Date, investments: Investment[]): Promise<ProfitMeta> {
         return investments.reduce(
-            (profitMeta: ProfitMeta, inv: Investment): ProfitMeta => {
+            async (profitMetaPromise: Promise<ProfitMeta>, inv: Investment): Promise<ProfitMeta> => {
+                const profitMeta = await profitMetaPromise;
+
                 if (this.dateUtils.isEarlier(date, inv.date)) {
                     return profitMeta;
                 }
 
-                const currentQuote = this.findNearestQuote(date, inv, quotes);
-                if (!currentQuote) {
-                    console.error('### no quote found for date: %o and asset: %o', date, inv.asset);
-                } else {
-                    profitMeta.assetsProfit.push(new AssetProfit(inv, currentQuote.buyUsd));
+                const quote = await this.quotesService.getQuote(date, inv.asset);
+                if (quote) {
+                    profitMeta.assetsProfit.push(new AssetProfit(inv, quote.buyUsd));
                 }
 
                 return profitMeta;
             },
-            new ProfitMeta()
+            Promise.resolve(new ProfitMeta())
         );
     }
 
@@ -57,14 +43,8 @@ export class ProfitService {
         return this.appStateStore.state$.pipe(
             map(appState => ({ investments: appState.investments })),
             distinctUntilChanged(),
-            concatMap((appState: ProfitAppState) => {
-                const today = new Date();
-                const dates = this.arrayUtils.unique([today, ...appState.investments.map(inv => new Date(inv.date))]);
-                return this.repoService.getQuotesForDates(dates).pipe(
-                    map((quotes: AssetQuote[]): ProfitMeta => {
-                        return this.calculateProfitFor(today, appState.investments, quotes);
-                    })
-                );
+            flatMap((appState: ProfitAppState) => {
+                return this.calculateProfitFor(new Date(), appState.investments);
             })
         );
     }

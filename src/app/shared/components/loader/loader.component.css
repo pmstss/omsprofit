@@ -1,3 +1,13 @@
 :host {
     position: absolute;
 }
+
+.loader-message {
+    position: fixed;
+    z-index: 1000;
+    top: calc(50vh + 20px);
+    display: inline-block;
+    white-space: nowrap;
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -10,7 +10,6 @@ import { AutoUnsubscribe } from '../../common-aux';
     styleUrls: ['./profit.component.css']
 })
 export class ProfitComponent implements OnInit {
-    loading = true;
     profitMeta: ProfitMeta = null;
     faCaretDown = faCaretDown;
     faCaretUp = faCaretUp;
@@ -24,7 +23,6 @@ export class ProfitComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.profitService.getProfitObservable().subscribe((profitMeta: ProfitMeta) => {
             this.profitMeta = profitMeta;
-            this.loading = false;
         });
     }
 }

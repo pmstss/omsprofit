@@ -1,7 +1,7 @@
 import { Component, DoCheck, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppState, AppStateStore, Investment, MessageService, MessageType, RepoService } from '../../core';
+import { AppState, AppStateStore, Investment, MessageService, MessageType } from '../../core';
 import { AutoUnsubscribe, DialogService } from '../../common-aux';
 import { InvestmentComponent } from './investment/investment.component';
 
@@ -21,8 +21,8 @@ export class SettingsComponent implements OnInit, DoCheck {
     saveAllowed: boolean = false;
     resetAllowed: boolean = false;
 
-    constructor(private appStateStore: AppStateStore, private repoService: RepoService,
-                private messageService: MessageService, private dialogService: DialogService) {
+    constructor(private appStateStore: AppStateStore, private messageService: MessageService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {

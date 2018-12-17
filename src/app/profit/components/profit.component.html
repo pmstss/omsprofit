@@ -1,5 +1,5 @@
 <div class="profit d-flex flex-column h-100 justify-content-center align-items-center text-center">
-    <div *ngIf="!loading">
+    <div *ngIf="profitMeta">
         <div class="profit-value bg-custom my-4 d-inline-block"
               [ngClass]="{'text-danger': !profitMeta.positive, 'text-success': profitMeta.positive}">
             <div class="text-primary">Instant Profit</div>
@@ -40,6 +40,4 @@
             </div>
         </div>
     </div>
-
-    <app-loader *ngIf="loading" [message]="'Calculating profit...'"></app-loader>
 </div>
