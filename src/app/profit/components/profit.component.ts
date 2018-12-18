@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { faCaretDown, faCaretUp, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { ProfitMeta, ProfitService } from '../../core';
+import { ProfitMeta, ProfitService } from '../../quotes';
 import { AutoUnsubscribe } from '../../common-aux';
 
 @Component({

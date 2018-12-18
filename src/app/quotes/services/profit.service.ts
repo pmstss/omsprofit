@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, flatMap, map } from 'rxjs/operators';
-import { DateUtilsToken, ArrayUtilsToken, DateUtils, ArrayUtils } from '../../common-aux';
+import { AppStateStore, Investment } from '../../core';
+import { DateUtilsToken, DateUtils } from '../../common-aux';
 import { AssetProfit } from '../types/asset-profit';
 import { ProfitMeta } from '../types/profit-meta';
-import { Investment } from '../types/investment';
-import { AppStateStore } from '../state/app-state-store';
 import { QuotesService } from './quotes.service';
 
 export class ProfitAppState {
@@ -15,8 +14,7 @@ export class ProfitAppState {
 @Injectable()
 export class ProfitService {
     constructor(private appStateStore: AppStateStore, private quotesService: QuotesService,
-                @Inject(DateUtilsToken) private dateUtils: DateUtils,
-                @Inject(ArrayUtilsToken) private arrayUtils: ArrayUtils) {
+                @Inject(DateUtilsToken) private dateUtils: DateUtils) {
     }
 
     calculateProfitFor(date: Date, investments: Investment[]): Promise<ProfitMeta> {

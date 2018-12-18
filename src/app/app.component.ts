@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuotesService } from './core';
+import { QuotesService } from './quotes';
 
 @Component({
     selector: 'app-root',

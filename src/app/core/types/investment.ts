@@ -1,6 +1,5 @@
 import { formatDate } from '@angular/common';
 import { Asset } from './asset';
-import { DateUtilsImpl } from '../../common-aux';
 
 export interface InvestmentData {
     date: string;
@@ -14,8 +13,6 @@ export class Investment {
     asset: Asset;
     amount: number;
     quote: number;
-
-    private dateUtils = new DateUtilsImpl();
 
     constructor(data?: InvestmentData) {
         this.date = data ? new Date(data.date) : new Date();

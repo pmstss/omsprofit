@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { QuotesGuard } from '../core';
+import { QuotesGuard } from '../quotes';
 
 const routes: Routes = [
     { path: 'profit', loadChildren: '../profit/profit.module#ProfitModule', canActivate: [QuotesGuard] },

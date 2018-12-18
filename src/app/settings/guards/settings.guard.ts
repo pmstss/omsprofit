@@ -8,8 +8,7 @@ export class SettingsGuard implements CanDeactivate<SettingsComponent> {
     constructor(private dialogService: DialogService) {
     }
 
-    canDeactivate(component: SettingsComponent, currentRoute: ActivatedRouteSnapshot,
-                  currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): boolean {
+    canDeactivate(component: SettingsComponent): boolean {
         if (component.isValid() && !component.isDirty()) {
             return true;
         }

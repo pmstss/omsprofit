@@ -3,8 +3,9 @@ import { Component, EventEmitter, Inject, Input, KeyValueDiffer, KeyValueDiffers
 import { formatDate } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgForm } from '@angular/forms';
-import { Asset, AssetQuote, Investment, QuotesService, QUOTES_MIN_DATE } from '../../../core';
-import { DateUtilsToken, DateUtils, DialogService } from '../../../common-aux';
+import { Asset, Investment } from '../../../core';
+import { DialogService } from '../../../common-aux';
+import { AssetQuote, QuotesService, QUOTES_MIN_DATE } from '../../../quotes';
 
 @Component({
     selector: 'investment',
@@ -42,7 +43,6 @@ export class InvestmentComponent implements OnInit {
     differ: KeyValueDiffer<string, any>;
 
     constructor(private quotesService: QuotesService, private dialogService: DialogService,
-                @Inject(DateUtilsToken) private dateUtils: DateUtils,
                 @Inject(QUOTES_MIN_DATE) minDate: Date,
                 private keyValueDiffers: KeyValueDiffers) {
         this.minDateString = InvestmentComponent.formatDateForInput(minDate);

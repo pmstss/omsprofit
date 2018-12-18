@@ -1,5 +1,5 @@
+import { Asset } from '../../core';
 import { AssetOperation } from './asset-operation';
-import { Asset } from './asset';
 
 class AssetQuoteNormalizer {
     private static EPS = 0.0003;

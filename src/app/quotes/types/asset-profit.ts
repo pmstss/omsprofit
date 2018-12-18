@@ -1,5 +1,4 @@
-import { Investment } from './investment';
-import { Asset } from './asset';
+import { Asset, Investment } from '../../core';
 
 export class AssetProfit {
     investment: Investment;

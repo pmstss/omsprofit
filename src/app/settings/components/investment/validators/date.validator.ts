@@ -5,7 +5,7 @@ import {
     ValidatorFn,
     Validator, ValidationErrors
 } from '@angular/forms';
-import { QUOTES_MIN_DATE } from '../../../../core';
+import { QUOTES_MIN_DATE } from '../../../../quotes';
 import { DateUtils, DateUtilsToken } from '../../../../common-aux';
 
 @Directive({

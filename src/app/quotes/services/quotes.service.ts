@@ -1,9 +1,9 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { Asset } from '../../core';
 import { DateUtils, DateUtilsToken } from '../../common-aux';
 import { RepoService } from './repo.service';
 import { QuotesStorage } from './quotes-storage';
-import { Asset } from '../types/asset';
 import { AssetQuote } from '../types/asset-quote';
 
 export const QUOTES_MIN_DATE = new InjectionToken('QUOTES_MIN_DATE');

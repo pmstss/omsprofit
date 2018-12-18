@@ -3,7 +3,8 @@ import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { IChartistSeriesData, IChartistSettingsType } from 'ngx-chartist';
-import { Investment, AppState, AppStateStore, DatePeriod, ProfitService } from '../../../core';
+import { Investment, AppState, AppStateStore, DatePeriod } from '../../../core';
+import { ProfitService } from '../../../quotes';
 import { DateUtilsToken, DateUtils, AutoUnsubscribe } from '../../../common-aux';
 
 @Component({

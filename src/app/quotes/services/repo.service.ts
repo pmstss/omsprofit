@@ -2,7 +2,7 @@ import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { Observable, throwError } from 'rxjs';
-import { catchError, delay, map, mergeMap, toArray } from 'rxjs/operators';
+import { catchError, map, mergeMap, toArray } from 'rxjs/operators';
 import { AssetQuote } from '../types/asset-quote';
 
 export const REPO_URL = new InjectionToken('repo_url');
