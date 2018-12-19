@@ -1,8 +1,9 @@
-import { Component, KeyValueDiffer, KeyValueDiffers } from '@angular/core';
+import { Component, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { MessageService, Message, MessageType } from '../../../core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AutoUnsubscribe } from '../../../common-aux';
+import { TrimStacktracePipe } from './trim.stacktrace.pipe';
 
 const MAX_MESSAGES = 3;
 
@@ -25,19 +26,22 @@ const MAX_MESSAGES = 3;
         ])
     ]
 })
-export class MessageComponent {
+export class MessageComponent implements OnInit {
     messages: Message[] = [];
     differ: KeyValueDiffer<string, any>;
 
     @AutoUnsubscribe private subscription: Subscription;
 
     constructor(private messageService: MessageService, private keyValueDiffers: KeyValueDiffers) {
-        this.subscription = messageService.getMessages().subscribe((msg: Message) => {
+    }
+
+    ngOnInit() {
+        this.subscription = this.messageService.getMessages().subscribe((msg: Message) => {
             while (this.messages.length >= MAX_MESSAGES) {
                 this.messages.pop();
             }
 
-            const differ = keyValueDiffers.find({}).create();
+            const differ = this.keyValueDiffers.find({}).create();
             differ.diff(this.messages[0] || {});
             const diff = differ.diff(msg);
             if (!diff) {
@@ -51,14 +55,14 @@ export class MessageComponent {
         });
     }
 
-    clear(msg) {
+    clear(msg: Message) {
         const idx = this.messages.indexOf(msg);
         if (idx >= 0) {
             this.messages.splice(idx, 1);
         }
     }
 
-    getClass(msg) {
+    getClass(msg: Message) {
         switch (msg.type) {
         case MessageType.ERROR:
             return 'alert-danger';
