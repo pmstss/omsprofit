@@ -9,9 +9,17 @@ export class QuotesStorage {
         }
 
         const uniqueDates = Array.from(new Set(quotes.map(q => q.date.getTime())));
+        for (let i = 0, d = new Date(uniqueDates[0]); d.getTime() === uniqueDates[i];
+                ++i, d.setDate(d.getDate() + 1)) {
+            const dateQuotes = quotes.filter(q => q.date.getTime() === d.getTime());
+            if (dateQuotes.length !== 4) {
+                console.log('incomplete quotes for date: ', d.toISOString().substr(0, 10), dateQuotes);
+            }
+        }
+
         if (uniqueDates.length * 4 !== quotes.length) {
-            throw new Error(
-                `Should be 4 quotes per date, but there are ${quotes.length} quotes and ${uniqueDates.length} dates`);
+            throw new Error(`Should be 4 quotes per date, but there are ${quotes.length} quotes` +
+                ` and ${uniqueDates.length} dates`);
         }
     }
 
