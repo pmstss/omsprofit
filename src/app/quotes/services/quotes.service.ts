@@ -19,7 +19,7 @@ export class QuotesService {
     }
 
     private static key(quote: {asset: Asset, date: Date}): string {
-        return quote.asset + formatDate(quote.date, 'yyyy-MM-dd', 'en');
+        return `${formatDate(quote.date, 'yyyy-MM-dd', 'en')} ${quote.asset}`;
     }
 
     private findFirstMissingDate(quotes: AssetQuote[]): Date {
@@ -39,7 +39,11 @@ export class QuotesService {
                 return this.dateUtils.isEarlier(new Date(), firstMissingDate)
                     ? quotes
                     : this.repoService.getQuotes(firstMissingDate, new Date()).toPromise()
-                        .then(quotes => this.quotesStorage.addQuotes(quotes));
+                        .then(quotes => this.quotesStorage.addQuotes(quotes))
+                        .catch((e) => {
+                            console.error('quotes fetch error', e);
+                            throw new Error('Network error on quotes fetch');
+                        });
             });
     }
 
@@ -51,29 +55,17 @@ export class QuotesService {
         if (!this.quotesMapPromise) {
             this.quotesMapPromise = this.fetchLatest().then(quotes =>
                 quotes.reduce(
-                    (quotesMap: Map<string, AssetQuote>, quote) => {
-                        quotesMap.set(QuotesService.key(quote), quote);
-                        return quotesMap;
-                    },
+                    (quotesMap, quote) => quotesMap.set(QuotesService.key(quote), quote),
                     new Map<string, AssetQuote>()
                 )
-            ).catch((e) => {
-                console.error('stored quotes didn\'t pass sanity check, will clear and reload', e);
-                return this.quotesStorage.clear().then(() => {
-                    window.location.reload();
-                    throw e;
-                });
-            });
+            );
         }
         return this.quotesMapPromise.then(() => true);
     }
 
-    // private findNearestQuote(date: Date, inv: Investment, quotes: AssetQuote[]): AssetQuote {
-    //     let currentQuote;
-    //     for (let i = 0, d = new Date(date); i < 10 && !currentQuote; ++i, d.setDate(d.getDate() - 1)) {
-    //         currentQuote = this.findAssetQuoteForDate(quotes, inv.asset, d);
-    //     }
-    //     return currentQuote;
-    // }
-
+    getLatestAvailableDate(): Promise<Date> {
+        return this.quotesMapPromise
+            .then(quotesMap => Math.max(...[...quotesMap.values()].map(q => q.date.getTime())))
+            .then(n => new Date(n));
+    }
 }

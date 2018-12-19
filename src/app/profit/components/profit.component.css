@@ -28,3 +28,7 @@ h2 {
     margin: 0 10px;
     white-space: nowrap;
 }
+
+.label-outdated {
+    opacity: 0.5;
+}

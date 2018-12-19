@@ -33,7 +33,7 @@ export class ProfitService {
 
                 return profitMeta;
             },
-            Promise.resolve(new ProfitMeta())
+            Promise.resolve(new ProfitMeta(date))
         );
     }
 
@@ -42,7 +42,9 @@ export class ProfitService {
             map(appState => ({ investments: appState.investments })),
             distinctUntilChanged(),
             flatMap((appState: ProfitAppState) => {
-                return this.calculateProfitFor(new Date(), appState.investments);
+                return this.quotesService.getLatestAvailableDate().then((date) => {
+                    return this.calculateProfitFor(date, appState.investments);
+                });
             })
         );
     }

@@ -2,6 +2,11 @@ import { AssetProfit } from './asset-profit';
 
 export class ProfitMeta {
     assetsProfit: AssetProfit[] = [];
+    date: Date;
+
+    constructor(date) {
+        this.date = date;
+    }
 
     get investValue(): number {
         return this.assetsProfit.reduce((res, assetProfit) => res + assetProfit.investValue, 0);
@@ -21,5 +26,9 @@ export class ProfitMeta {
 
     get positive(): boolean {
         return this.profitPercent > 0;
+    }
+
+    get today(): boolean {
+        return this.date.toISOString().substr(0, 10) === (new Date()).toISOString().substr(0, 10);
     }
 }

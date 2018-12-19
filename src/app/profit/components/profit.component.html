@@ -4,17 +4,17 @@
               [ngClass]="{'text-danger': !profitMeta.positive, 'text-success': profitMeta.positive}">
             <div class="text-primary">Instant Profit</div>
             <h2 class="my-1">
-                {{profitMeta.profit | currency : 'USD': 'symbol': '1.2-2'}}
+                {{profitMeta.profit | currency : 'USD': 'symbol': '1.2-2'}}<span *ngIf="!profitMeta.today">*</span>
             </h2>
             <span class="border rounded px-2"
                   [ngClass]="{'border-danger': !profitMeta.positive, 'border-success': profitMeta.positive}">
                     <fa-icon [icon]="profitMeta.positive ? faCaretUp : faCaretDown"></fa-icon>
                 {{profitMeta.profitPercent | percent: '1.2-2' | sign}}
             </span>
-
             <div class="text-info mt-4">
                 Assets value: {{profitMeta.value | currency : 'USD': 'symbol': '1.2-2'}}
             </div>
+            <div *ngIf="!profitMeta.today" class="font-italic label-outdated">* for date: {{profitMeta.date | date}}</div>
         </div>
 
         <div class="asset-details-container bg-custom mt-4 text-primary"
