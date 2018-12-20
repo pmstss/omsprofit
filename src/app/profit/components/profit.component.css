@@ -2,6 +2,10 @@ h2 {
     font-size: 3rem;
 }
 
+.details-label-collapse {
+    cursor: pointer;
+}
+
 .profit-value {
     margin-top: -20vh !important;
     border-radius: 10px;

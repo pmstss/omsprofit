@@ -1,4 +1,8 @@
 {
+  "appData": {
+    "name": "appData: omsprofit - precious metals investments profit checker",
+    "description": "appData: Check your precious metals investments profit now!"
+  },
   "index": "/index.html",
   "assetGroups": [
     {
