@@ -1,5 +1,4 @@
 # omsprofit
-[![Known Vulnerabilities](https://snyk.io/test/github/pmstss/omsprofit/badge.svg?targetFile=package.json)](https://snyk.io/test/github/pmstss/omsprofit?targetFile=package.json)
 
 Angular pet project for checking precious metals (au, ag, pt, pd) investments profit.
 Uses [omsfeed project](https://github.com/pmstss/omsfeed) as server side.
