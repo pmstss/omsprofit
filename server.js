@@ -6,6 +6,15 @@ const app = express();
 
 app.use(compression({ threshold: 0 }));
 
+app.use((req, res, next) => {
+    const value = req.header('x-forwarded-proto')
+    if (value && value !== 'https') {
+        res.redirect(`https://${req.header('host')}${req.url}`)
+    } else {
+        next();
+    }
+});
+
 app.use(express.static(__dirname + '/dist/omsprofit'));
 
 app.get('/robots.txt', (req, res) => {
