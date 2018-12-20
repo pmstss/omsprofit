@@ -1,7 +1,10 @@
-const express = require('express');
 const path = require('path');
+const express = require('express');
+const compression = require('compression');
 
 const app = express();
+
+app.use(compression({ threshold: 0 }));
 
 app.use(express.static(__dirname + '/dist/omsprofit'));
 
