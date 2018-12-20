@@ -7,6 +7,10 @@ header {
     width: 100%;
 }
 
+.logo {
+    width: 36px;
+}
+
 .navbar {
     padding: 0 0.5rem;
     flex-wrap: nowrap;
