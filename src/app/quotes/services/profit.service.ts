@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { distinctUntilChanged, flatMap, map } from 'rxjs/operators';
 import { AppStateStore, Investment } from '../../core';
 import { DateUtilsToken, DateUtils } from '../../common-aux';
@@ -41,11 +41,11 @@ export class ProfitService {
         return this.appStateStore.state$.pipe(
             map(appState => ({ investments: appState.investments })),
             distinctUntilChanged(),
-            flatMap((appState: ProfitAppState) => {
-                return this.quotesService.getLatestAvailableDate().then((date) => {
+            flatMap((appState: ProfitAppState) =>
+                this.quotesService.getLatestAvailableDate().then((date: Date) => {
                     return this.calculateProfitFor(date, appState.investments);
-                });
-            })
+                })
+            )
         );
     }
 }

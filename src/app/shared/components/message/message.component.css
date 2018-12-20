@@ -10,14 +10,17 @@
 .alert {
     max-width: 500px;
     min-width: 300px;
+    max-height: 50vh;
     width: 100%;
     word-break: break-all;
+    overflow: auto;
 }
 
-.alert .message {
+.message {
     flex: 1;
+    white-space: pre-wrap;
 }
 
-.alert .close {
+.close {
     cursor: pointer;
 }

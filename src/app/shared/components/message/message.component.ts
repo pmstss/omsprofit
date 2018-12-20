@@ -3,7 +3,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Subscription } from 'rxjs';
 import { MessageService, Message, MessageType } from '../../../core';
 import { AutoUnsubscribe } from '../../../common-aux';
-import { TrimStacktracePipe } from './trim.stacktrace.pipe';
 
 const MAX_MESSAGES = 3;
 
@@ -42,8 +41,8 @@ export class MessageComponent implements OnInit {
             }
 
             const differ = this.keyValueDiffers.find({}).create();
-            differ.diff(this.messages[0] || {});
-            const diff = differ.diff(msg);
+            differ.diff(<{ [key: string]: {}; }><any>this.messages[0] || {});
+            const diff = differ.diff(<{ [key: string]: {}; }><any>msg);
             if (!diff) {
                 this.messages.shift();
             }

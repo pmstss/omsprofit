@@ -6,10 +6,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { MessageComponent } from './components/message/message.component';
-import { TrimStacktracePipe } from './components/message/trim.stacktrace.pipe';
+import { MessagePipe } from './components/message/message.pipe';
 
 @NgModule({
-    declarations: [AssetNamePipe, HeaderComponent, LoaderComponent, MessageComponent, TrimStacktracePipe],
+    declarations: [AssetNamePipe, HeaderComponent, LoaderComponent, MessageComponent, MessagePipe],
     imports: [
         CommonModule,
         NgxLoadingModule,

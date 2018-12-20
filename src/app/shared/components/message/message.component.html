@@ -1,7 +1,7 @@
 <ng-container *ngIf="messages.length">
     <div *ngFor="let msg of messages"
             class="alert ml-auto mr-auto d-flex align-items-start" [ngClass]="getClass(msg)" [@fadeAnimation]="'in'">
-        <span class="message">{{msg.message | trimStacktrace}}</span>
-        <span class="close p-1" (click)="clear(msg)">×</span>
+        <pre class="message m-0 p-0">{{msg.message | message}}</pre>
+        <span class="close px-1" (click)="clear(msg)">×</span>
     </div>
 </ng-container>

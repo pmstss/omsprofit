@@ -18,10 +18,13 @@ export class RepoService {
 
     private static handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
-            return throwError(`Network error:${error.error.message}`);
+            return throwError(`Network error: ${error.error.message}`);
         }
 
-        return throwError(`Network error ${error.status}: ${error.error}`);
+        if (error.status === 0) {
+            return throwError('Network is unreachable');
+        }
+        return throwError(error.message);
     }
 
     private dateToString(date: Date): string {

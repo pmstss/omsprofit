@@ -39,32 +39,26 @@ export class QuotesService {
                 return this.dateUtils.isEarlier(new Date(), firstMissingDate)
                     ? quotes
                     : this.repoService.getQuotes(firstMissingDate, new Date()).toPromise()
-                        .then(quotes => this.quotesStorage.addQuotes(quotes))
-                        .catch((e) => {
-                            console.error('quotes fetch error', e);
-                            throw new Error('Network error on quotes fetch');
-                        });
+                        .then(quotes => this.quotesStorage.addQuotes(quotes));
             });
     }
 
     getQuote(date: Date, asset: Asset): Promise<AssetQuote> {
-        return this.quotesMapPromise.then(quotesMap => quotesMap.get(QuotesService.key({ asset, date })));
+        return this.getQuotesReadyPromise().then(quotesMap => quotesMap.get(QuotesService.key({ asset, date })));
     }
 
-    getQuotesReadyPromise(): Promise<boolean> {
+    getQuotesReadyPromise(): Promise<Map<string, AssetQuote>> {
         if (!this.quotesMapPromise) {
-            this.quotesMapPromise = this.fetchLatest().then(quotes =>
-                quotes.reduce(
-                    (quotesMap, quote) => quotesMap.set(QuotesService.key(quote), quote),
-                    new Map<string, AssetQuote>()
-                )
-            );
+            this.quotesMapPromise = this.fetchLatest().then(quotes => quotes.reduce(
+                (quotesMap, quote) => quotesMap.set(QuotesService.key(quote), quote),
+                new Map<string, AssetQuote>()
+            ));
         }
-        return this.quotesMapPromise.then(() => true);
+        return this.quotesMapPromise;
     }
 
     getLatestAvailableDate(): Promise<Date> {
-        return this.quotesMapPromise
+        return this.getQuotesReadyPromise()
             .then(quotesMap => Math.max(...[...quotesMap.values()].map(q => q.date.getTime())))
             .then(n => new Date(n));
     }

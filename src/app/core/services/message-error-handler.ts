@@ -9,11 +9,10 @@ export class MessageErrorHandler extends ErrorHandler {
 
     handleError(error) {
         super.handleError(error);
-        const msg = error instanceof Error ? error.message : error.toString();
         // trigger change detection
         this.ngZone.run(
             () => this.messageService.publish({
-                message: msg,
+                message: error,
                 type: MessageType.ERROR,
                 timeout: 0
             }),

@@ -8,6 +8,6 @@ export class QuotesGuard implements CanActivate {
     }
 
     canActivate(): Promise<boolean> {
-        return this.quotesService.getQuotesReadyPromise();
+        return this.quotesService.getQuotesReadyPromise().then(() => true).catch(() => false);
     }
 }

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { faCaretDown, faCaretUp, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { ProfitMeta, ProfitService } from '../../quotes';
 import { AutoUnsubscribe } from '../../common-aux';
+import { MessageService, MessageType } from 'src/app/core';
 
 @Component({
     selector: 'app-profit',
@@ -17,12 +18,18 @@ export class ProfitComponent implements OnInit {
 
     @AutoUnsubscribe private subscription: Subscription;
 
-    constructor(private profitService: ProfitService) {
+    constructor(private profitService: ProfitService, private messageService: MessageService) {
     }
 
     ngOnInit() {
-        this.subscription = this.profitService.getProfitObservable().subscribe((profitMeta: ProfitMeta) => {
-            this.profitMeta = profitMeta;
-        });
+        this.subscription = this.profitService.getProfitObservable().subscribe(
+            (profitMeta: ProfitMeta) => {
+                this.profitMeta = profitMeta;
+            },
+            e => this.messageService.publish({
+                message: e,
+                type: MessageType.ERROR
+            })
+        );
     }
 }
