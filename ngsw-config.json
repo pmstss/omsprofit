@@ -1,0 +1,40 @@
+{
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/*.css",
+          "/*.js",
+          "/**/*.jpg"
+        ]
+      }
+    }, {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/icons/**"
+        ]
+      }
+    }
+  ],
+  "resourceGroups": [{
+    "name": "quotes",
+    "urls": [
+      "https://omstracker.herokuapp.com/quotes/**"
+    ],
+    "version": 1,
+    "cacheConfig": {
+      "maxSize": 100,
+      "maxAge": "14d",
+      "timeout": "0s",
+      "strategy": "performance"
+    }
+  }]
+}
