@@ -4,15 +4,22 @@
 Angular pet project for checking precious metals (au, ag, pt, pd) investments profit.
 Uses [omsfeed project](https://github.com/pmstss/omsfeed) as server side.
 
-**ALPHA VERSION, bugs are possible...**
-
 ### [Live Demo](https://omsprofit.herokuapp.com/)
 
 <div>
-<img src="https://user-images.githubusercontent.com/12969334/50033345-34ad7780-0009-11e9-9259-3387b7884886.jpg" width="187" height="333" alt="Profit"/>    
-<img src="https://user-images.githubusercontent.com/12969334/50033344-34ad7780-0009-11e9-9717-764531acce6c.jpg" width="187" height="333" alt="Chart"/>
+<img src="https://user-images.githubusercontent.com/12969334/50033345-34ad7780-0009-11e9-9259-3387b7884886.jpg" width="187" height="333" alt="Profit"/>&nbsp;
+<img src="https://user-images.githubusercontent.com/12969334/50033344-34ad7780-0009-11e9-9717-764531acce6c.jpg" width="187" height="333" alt="Chart"/>&nbsp;
 <img src="https://user-images.githubusercontent.com/12969334/50033346-34ad7780-0009-11e9-8429-d71a01740372.jpg" width="187" height="333" alt="Settings"/>    
 </div>    
+
+### [PWA Live Demo - alpha version](https://omsprofeed.herokuapp.com/)
+
+[What is PWA?](https://developers.google.com/web/progressive-web-apps/) 
+In short PWA are installable modern web apps that could work offline (without internet connection). Try to open PWA demo link above from tablet or mobile and you will see ["Add to Home Screen" prompt](https://developers.google.com/web/fundamentals/app-install-banners/)
+
+[LightHouse](https://developers.google.com/web/tools/lighthouse/) report:
+
+<img src="https://user-images.githubusercontent.com/12969334/50312100-4afb7d80-04b8-11e9-8cbe-92d4c93ee43c.png" width="600"/>
 
 
 ### Covered Angular topics:
