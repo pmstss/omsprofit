@@ -8,10 +8,10 @@
         <div class="col-12 col-sm-9 p-0">
             <select id="asset{{idx}}" name="asset" class="form-control form-control-sm"
                     [(ngModel)]="inv.asset" required="required" #asset="ngModel">
-                <option value="au">Gold</option>
-                <option value="pt">Platinum</option>
-                <option value="ag">Silver</option>
-                <option value="pd">Palladium</option>
+                <option value="au">Gold (au)</option>
+                <option value="pt">Platinum (pt)</option>
+                <option value="ag">Silver (ag)</option>
+                <option value="pd">Palladium (pd)</option>
             </select>
             <div *ngIf="asset.errors && asset.touched" class="custom-error text-center small">Required</div>
         </div>

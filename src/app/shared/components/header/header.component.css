@@ -7,6 +7,27 @@ header {
     width: 100%;
 }
 
+.navbar {
+    padding: 0 0.5rem;
+    flex-wrap: nowrap;
+}
+
+.navbar .navbar-nav {
+    flex: 1;
+}
+
 header .navbar-brand {
     color: #bbd;
+    flex: 0;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #fff;
+    border-bottom: 2px solid rgba(255,255,255,0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    padding: 1rem 0.5rem;
+    color: rgba(235,235,255,.7);
+    border-bottom: 2px solid transparent;
 }
