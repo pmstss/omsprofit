@@ -15,7 +15,7 @@ import { MessagePipe } from './components/message/message.pipe';
         NgxLoadingModule,
         RouterModule // routerLink is declared there
     ],
-    exports: [HeaderComponent, LoaderComponent, MessageComponent, AssetNamePipe],
+    exports: [HeaderComponent, LoaderComponent, MessageComponent, AssetNamePipe]
 })
 export class SharedModule {
 }
